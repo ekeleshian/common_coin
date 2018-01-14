@@ -28,14 +28,22 @@ def get_admin(users):
 	return update_users
 
 def get_request(player, users):
-
+	#set_trace()
 	will_request = input("{}, do you want to connect with someone (y/n)? ".format(player['id']))
 
 	if will_request == 'n'.strip().lower():
 		admin = get_admin(users)
 		resume_game = get_request(admin, users)
 	else:
-		potential_connection = input("Who do you want to connect with? ")
+		user_check = False
+		while not user_check:
+			potential_connection = input("Who do you want to connect with? ")
+			for user in users:
+				if user['id'] == potential_connection and potential_connection != player['id']:
+					user_check = True
+					break
+			if potential_connection == player['id']:
+				print("You can't connect with yourself! ")
 		is_connection = input("{}, do you want to connect with {} (y/n)?".format(potential_connection, player['id']))
 		if is_connection == 'y'.strip().lower():
 			player['credits'] += 10
