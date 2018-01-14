@@ -12,8 +12,13 @@ def get_admin(users):
 	for player in users:			#to delete prior admins
 		if player['admin'] == True:
 			player['admin'] = False
-
-	admin = input("Who wants to be the admin? ")
+	user_check = False
+	while not user_check:
+		admin = input("Who wants to be the admin? ")
+		for player in users:
+			if player['id'] == admin:
+				user_check = True
+				break
 
 	for player in users:
 		if player['id'] == admin:
@@ -24,7 +29,7 @@ def get_admin(users):
 
 def get_request(player, users):
 
-	will_request = input("{}, Do you want to connect with someone (y/n)? ".format(player['id']))
+	will_request = input("{}, do you want to connect with someone (y/n)? ".format(player['id']))
 
 	if will_request == 'n'.strip().lower():
 		admin = get_admin(users)
@@ -57,7 +62,7 @@ def gather_players():
 	while not all_names:
 		for player in users:
 			name = input("What is your name? ")
-			player['id'] = name.capitalize()
+			player['id'] = name
 		all_names = True
 
 	return get_admin(users)
