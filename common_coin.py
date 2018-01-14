@@ -3,7 +3,7 @@ from pdb import set_trace
 from pprint import pprint as pp
 
 
-def add_player(player_num):
+def add_player():
 	
 	return {'id': 'default', 'admin': False, 'credits': 10}
 
@@ -50,14 +50,14 @@ def gather_players():
 	while not all_users:
 		add_players = input("How many players are in this game? ")
 		for num in range(int(add_players)):
-				player = add_player(num)
+				player = add_player()
 				users.append(player)
 		all_users = True
 
 	while not all_names:
 		for player in users:
 			name = input("What is your name? ")
-			player['id'] = name
+			player['id'] = name.capitalize()
 		all_names = True
 
 	return get_admin(users)
