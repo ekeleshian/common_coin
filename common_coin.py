@@ -5,7 +5,7 @@ from pprint import pprint as pp
 
 def add_player():
 	
-	return {'id': 'default', 'admin': False, 'credits': 10}
+	return {'id': 'default', 'admin': False, 'credits': 10, 'in_game':True}
 
 def get_admin(users):
 
@@ -35,14 +35,20 @@ def get_request(player, users):
 		admin = get_admin(users)
 		resume_game = get_request(admin, users)
 	else:
-		potential_connection = 'edgar'
 		potential_connection = input("Who do you want to connect with? ")
 		is_connection = input("{}, do you want to connect with {} (y/n)?".format(potential_connection, player['id']))
 		if is_connection == 'y'.strip().lower():
 			player['credits'] += 10
-			for player in users:
-				if player['id'] == potential_connection:
-					player['credits'] += 10
+			for user_dict in users:
+				if user_dict['id'] == potential_connection:
+					user_dict['credits'] += 10
+		else:
+			stolen_creds = player['credits']
+			player['credits'] = 0
+			player['in_game'] = False
+			for user_dict in users:
+				if user_dict['id'] == potential_connection:
+					user_dict['credits'] += stolen_creds
 
 	return users
 
